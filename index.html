@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>バブルソート学習サイト - 情報Ⅰ</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Roboto+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1><i class="fas fa-sort-amount-down"></i> バブルソート学習サイト</h1>
+            <p>高校 情報Ⅰ - アルゴリズムとプログラミング</p>
+        </div>
+    </header>
+
+    <nav class="tab-nav">
+        <div class="container">
+            <button class="tab-btn active" data-tab="learn"><i class="fas fa-book"></i> 学習</button>
+            <button class="tab-btn" data-tab="visualize"><i class="fas fa-play-circle"></i> 視覚化</button>
+            <button class="tab-btn" data-tab="code"><i class="fas fa-code"></i> コード例</button>
+            <button class="tab-btn" data-tab="quiz"><i class="fas fa-question-circle"></i> クイズ</button>
+        </div>
+    </nav>
+
+    <main class="container">
+        <!-- 学習タブ -->
+        <section id="learn-tab" class="tab-content active">
+            <div class="learn-section">
+                <h2><i class="fas fa-graduation-cap"></i> バブルソートとは？</h2>
+                <div class="explanation-card">
+                    <p>バブルソートは、<strong>隣り合う要素を比較して交換</strong>を繰り返すことで、配列を並び替える（ソートする）アルゴリズムです。</p>
+                    <p>配列の右端から左へと比較を進めていき、小さい値が左側に「沈んで」いく様子から、「バブルソート」と呼ばれています。</p>
+                </div>
+
+                <h3><i class="fas fa-list-ol"></i> アルゴリズムの手順</h3>
+                <div class="steps-container">
+                    <div class="step-card">
+                        <div class="step-number">1</div>
+                        <h4>配列の右端から左へ隣り合う要素を比較</h4>
+                        <p>左の要素が右の要素より大きければ交換する</p>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-number">2</div>
+                        <h4>配列の左端まで繰り返す</h4>
+                        <p>1回のパスで最小値が左端に移動する</p>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-number">3</div>
+                        <h4>全体を繰り返す</h4>
+                        <p>配列全体がソートされるまで繰り返す</p>
+                    </div>
+                </div>
+
+                <h3><i class="fas fa-chart-line"></i> 時間計算量</h3>
+                <div class="complexity-card">
+                    <div class="complexity-item">
+                        <span class="complexity-label">最悪計算量:</span>
+                        <span class="complexity-value">O(n²)</span>
+                    </div>
+                    <div class="complexity-item">
+                        <span class="complexity-label">平均計算量:</span>
+                        <span class="complexity-value">O(n²)</span>
+                    </div>
+                    <div class="complexity-item">
+                        <span class="complexity-label">最良計算量:</span>
+                        <span class="complexity-value">O(n)</span>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <i class="fas fa-info-circle"></i>
+                    <p><strong>ポイント:</strong> バブルソートはシンプルでわかりやすいアルゴリズムですが、データ量が多いと処理時間がかかります。学習用には最適ですが、実際のプログラムでは他の効率的なソートアルゴリズムが使われることが多いです。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 視覚化タブ -->
+        <section id="visualize-tab" class="tab-content">
+            <div class="visualize-section">
+                <h2><i class="fas fa-eye"></i> バブルソートの視覚化</h2>
+                
+                <div class="control-panel">
+                    <div class="input-group">
+                        <label for="array-input">
+                            <i class="fas fa-list"></i> 配列の値（カンマ区切り）:
+                        </label>
+                        <input type="text" id="array-input" value="64, 34, 25, 12, 22, 11, 90" placeholder="例: 5, 2, 8, 1, 9">
+                        <button id="set-array-btn" class="btn btn-primary"><i class="fas fa-check"></i> 配列をセット</button>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="speed-slider">
+                            <i class="fas fa-tachometer-alt"></i> アニメーション速度: <span id="speed-value">500</span>ms
+                        </label>
+                        <input type="range" id="speed-slider" min="100" max="2000" value="500" step="100">
+                    </div>
+
+                    <div class="button-group">
+                        <button id="start-btn" class="btn btn-success"><i class="fas fa-play"></i> 開始</button>
+                        <button id="step-btn" class="btn btn-info"><i class="fas fa-step-forward"></i> 1ステップ実行</button>
+                        <button id="pause-btn" class="btn btn-warning" disabled><i class="fas fa-pause"></i> 一時停止</button>
+                        <button id="reset-btn" class="btn btn-danger"><i class="fas fa-redo"></i> リセット</button>
+                    </div>
+
+                    <div class="quick-arrays">
+                        <label><i class="fas fa-magic"></i> クイック選択:</label>
+                        <button class="btn btn-small" data-array="5,2,8,1,9">小さい配列</button>
+                        <button class="btn btn-small" data-array="64,34,25,12,22,11,90">標準配列</button>
+                        <button class="btn btn-small" data-array="15,8,23,4,42,16,1,37">大きい配列</button>
+                        <button class="btn btn-small" id="random-btn">ランダム生成</button>
+                    </div>
+                </div>
+
+                <div class="stats-panel">
+                    <div class="stat-item">
+                        <i class="fas fa-sync-alt"></i>
+                        <span class="stat-label">パス回数:</span>
+                        <span class="stat-value" id="pass-count">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-balance-scale"></i>
+                        <span class="stat-label">比較回数:</span>
+                        <span class="stat-value" id="compare-count">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-exchange-alt"></i>
+                        <span class="stat-label">交換回数:</span>
+                        <span class="stat-value" id="swap-count">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-info"></i>
+                        <span class="stat-label">状態:</span>
+                        <span class="stat-value" id="status">未開始</span>
+                    </div>
+                </div>
+
+                <div class="visualization-container" id="visualization">
+                    <!-- アニメーションバーがここに表示されます -->
+                </div>
+
+                <div class="legend">
+                    <div class="legend-item">
+                        <div class="legend-box comparing"></div>
+                        <span>比較中</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-box swapping"></div>
+                        <span>交換中</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-box sorted"></div>
+                        <span>ソート済み</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-box default"></div>
+                        <span>未処理</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- コード例タブ -->
+        <section id="code-tab" class="tab-content">
+            <div class="code-section">
+                <h2><i class="fas fa-code"></i> Pythonでのコード例</h2>
+                
+                <h3>基本的なバブルソート</h3>
+                <div class="code-card">
+                    <pre><code>def bubble_sort(arr):
+    """
+    バブルソートのアルゴリズム
+    
+    引数:
+        arr: ソートする配列
+    """
+    n = len(arr)
+    
+    # 外側のループ: パス回数
+    for i in range(n):
+        # 内側のループ: 隣接要素の比較
+        for j in range(0, n - i - 1):
+            # 左の要素が右より大きい場合は交換
+            if arr[j] > arr[j + 1]:
+                arr[j], arr[j + 1] = arr[j + 1], arr[j]
+    
+    return arr
+
+# 使用例
+data = [64, 34, 25, 12, 22, 11, 90]
+print("ソート前:", data)
+bubble_sort(data)
+print("ソート後:", data)</code></pre>
+                </div>
+
+                <h3>改良版（最適化されたバブルソート）</h3>
+                <div class="code-card">
+                    <pre><code>def optimized_bubble_sort(arr):
+    """
+    最適化されたバブルソート
+    交換が発生しなかった場合は早期終了する
+    
+    引数:
+        arr: ソートする配列
+    """
+    n = len(arr)
+    
+    for i in range(n):
+        swapped = False  # 交換フラグ
+        
+        for j in range(0, n - i - 1):
+            if arr[j] > arr[j + 1]:
+                arr[j], arr[j + 1] = arr[j + 1], arr[j]
+                swapped = True  # 交換が発生
+        
+        # 交換が発生しなかった場合は完了
+        if not swapped:
+            break
+    
+    return arr
+
+# 使用例
+data = [1, 2, 3, 4, 5]  # すでにソート済み
+print("ソート前:", data)
+optimized_bubble_sort(data)
+print("ソート後:", data)
+print("→ 最適化により早期終了できる")</code></pre>
+                </div>
+
+                <h3>詳細情報を表示するバブルソート</h3>
+                <div class="code-card">
+                    <pre><code>def bubble_sort_with_info(arr):
+    """
+    処理の詳細を表示するバブルソート
+    
+    引数:
+        arr: ソートする配列
+    """
+    n = len(arr)
+    comparisons = 0  # 比較回数
+    swaps = 0        # 交換回数
+    
+    print(f"初期配列: {arr}")
+    print("-" * 50)
+    
+    for i in range(n):
+        print(f"\n【パス {i + 1}】")
+        
+        for j in range(0, n - i - 1):
+            comparisons += 1
+            print(f"  比較: arr[{j}]={arr[j]} と arr[{j+1}]={arr[j+1]}", end="")
+            
+            if arr[j] > arr[j + 1]:
+                arr[j], arr[j + 1] = arr[j + 1], arr[j]
+                swaps += 1
+                print(f" → 交換！")
+            else:
+                print(f" → 交換なし")
+        
+        print(f"  パス後: {arr}")
+    
+    print("-" * 50)
+    print(f"\n完了！")
+    print(f"比較回数: {comparisons}")
+    print(f"交換回数: {swaps}")
+    print(f"最終結果: {arr}")
+    
+    return arr
+
+# 使用例
+data = [5, 2, 8, 1, 9]
+bubble_sort_with_info(data)</code></pre>
+                </div>
+
+                <div class="practice-box">
+                    <h3><i class="fas fa-pencil-alt"></i> 練習問題</h3>
+                    <ol>
+                        <li>上記のコードを自分のPython環境で実行してみましょう</li>
+                        <li>配列の値を変えて、動作を確認してみましょう</li>
+                        <li>降順（大きい順）にソートするコードに変更してみましょう</li>
+                        <li>文字列のリストをソートしてみましょう（例: ["apple", "orange", "banana"]）</li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+
+        <!-- クイズタブ -->
+        <section id="quiz-tab" class="tab-content">
+            <div class="quiz-section">
+                <h2><i class="fas fa-question-circle"></i> 理解度チェッククイズ</h2>
+                
+                <div class="quiz-card" data-quiz="1">
+                    <h3>問題 1</h3>
+                    <p>バブルソート（右から左へ比較）で配列 [5, 2, 8, 1] をソートする場合、最初のパスで最初（左端）に移動する値はどれですか？</p>
+                    <div class="quiz-options">
+                        <button class="quiz-option" data-answer="correct">1</button>
+                        <button class="quiz-option" data-answer="wrong">2</button>
+                        <button class="quiz-option" data-answer="wrong">5</button>
+                        <button class="quiz-option" data-answer="wrong">8</button>
+                    </div>
+                    <div class="quiz-feedback"></div>
+                </div>
+
+                <div class="quiz-card" data-quiz="2">
+                    <h3>問題 2</h3>
+                    <p>配列の要素数がn個の場合、バブルソートの最悪計算量はどれですか？</p>
+                    <div class="quiz-options">
+                        <button class="quiz-option" data-answer="wrong">O(n)</button>
+                        <button class="quiz-option" data-answer="correct">O(n²)</button>
+                        <button class="quiz-option" data-answer="wrong">O(n log n)</button>
+                        <button class="quiz-option" data-answer="wrong">O(log n)</button>
+                    </div>
+                    <div class="quiz-feedback"></div>
+                </div>
+
+                <div class="quiz-card" data-quiz="3">
+                    <h3>問題 3</h3>
+                    <p>配列 [3, 7, 4, 9, 5] に対してバブルソート（右から左へ比較）を1パス実行した後、配列はどうなりますか？</p>
+                    <div class="quiz-options">
+                        <button class="quiz-option" data-answer="wrong">[3, 4, 5, 7, 9]</button>
+                        <button class="quiz-option" data-answer="correct">[3, 7, 4, 5, 9]</button>
+                        <button class="quiz-option" data-answer="wrong">[3, 4, 7, 9, 5]</button>
+                        <button class="quiz-option" data-answer="wrong">[7, 5, 4, 3, 9]</button>
+                    </div>
+                    <div class="quiz-feedback"></div>
+                </div>
+
+                <div class="quiz-card" data-quiz="4">
+                    <h3>問題 4</h3>
+                    <p>バブルソートの最良計算量O(n)が実現されるのはどのような場合ですか？</p>
+                    <div class="quiz-options">
+                        <button class="quiz-option" data-answer="wrong">配列が逆順に並んでいる場合</button>
+                        <button class="quiz-option" data-answer="correct">配列がすでにソート済みの場合</button>
+                        <button class="quiz-option" data-answer="wrong">配列がランダムに並んでいる場合</button>
+                        <button class="quiz-option" data-answer="wrong">配列の要素数が偶数の場合</button>
+                    </div>
+                    <div class="quiz-feedback"></div>
+                </div>
+
+                <div class="quiz-card" data-quiz="5">
+                    <h3>問題 5</h3>
+                    <p>要素数5の配列をバブルソートでソートする場合、最大何回のパスが必要ですか？</p>
+                    <div class="quiz-options">
+                        <button class="quiz-option" data-answer="wrong">3回</button>
+                        <button class="quiz-option" data-answer="correct">4回</button>
+                        <button class="quiz-option" data-answer="wrong">5回</button>
+                        <button class="quiz-option" data-answer="wrong">6回</button>
+                    </div>
+                    <div class="quiz-feedback"></div>
+                </div>
+
+                <div class="quiz-summary" id="quiz-summary">
+                    <h3><i class="fas fa-trophy"></i> 結果</h3>
+                    <p>正解数: <span id="correct-count">0</span> / 5</p>
+                    <p class="quiz-message" id="quiz-message"></p>
+                    <button id="retry-quiz-btn" class="btn btn-primary"><i class="fas fa-redo"></i> もう一度挑戦</button>
+                </div>
+
+                <div class="challenge-section">
+                    <h3><i class="fas fa-star"></i> チャレンジ問題</h3>
+                    <div class="challenge-card">
+                        <h4>手動ソートチャレンジ</h4>
+                        <p>以下の配列をバブルソートで並び替えてください。交換する要素をクリックで選択してください。</p>
+                        <div id="challenge-array" class="challenge-array">
+                            <!-- チャレンジ用の配列がここに表示されます -->
+                        </div>
+                        <div class="challenge-controls">
+                            <button id="start-challenge-btn" class="btn btn-success"><i class="fas fa-play"></i> チャレンジ開始</button>
+                            <button id="hint-btn" class="btn btn-info"><i class="fas fa-lightbulb"></i> ヒント</button>
+                            <button id="reset-challenge-btn" class="btn btn-danger"><i class="fas fa-redo"></i> リセット</button>
+                        </div>
+                        <div class="challenge-stats">
+                            <span>あなたの交換回数: <strong id="user-swaps">0</strong></span>
+                            <span>最小交換回数: <strong id="min-swaps">-</strong></span>
+                        </div>
+                        <div id="challenge-feedback" class="challenge-feedback"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 バブルソート学習サイト | 高等学校 情報Ⅰ</p>
+            <p>アルゴリズムを楽しく学ぼう！</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/quiz.js"></script>
+    <script src="js/challenge.js"></script>
+</body>
+</html>
